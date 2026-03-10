@@ -3,44 +3,11 @@
 import { useState, useEffect } from "react"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
+import { useAuth } from "@/components/auth-context"
 
 export default function TaskNavbar() {
   const router = useRouter()
-  const [isLoggedIn, setIsLoggedIn] = useState(false)
-  const [username, setUsername] = useState("")
-
-  useEffect(() => {
-    const token = localStorage.getItem("token")
-    if (token) {
-      setIsLoggedIn(true)
-      // Optionally fetch user info from /auth/me endpoint
-      fetchUserInfo(token)
-    }
-  }, [])
-
-  async function fetchUserInfo(token: string) {
-    try {
-      const res = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/auth/me`,
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        }
-      )
-      if (res.ok) {
-        const data = await res.json()
-        setUsername(data.username || data.email)
-      }
-    } catch (err) {
-      console.error("Failed to fetch user info:", err)
-    }
-  }
-
-  function handleLogout() {
-    localStorage.removeItem("token")
-    setIsLoggedIn(false)
-    setUsername("")
-    router.push("/")
-  }
+  const { isLoggedIn, username, userId, hasUserImage, logout } = useAuth()
 
   return (
     <nav
@@ -58,7 +25,7 @@ export default function TaskNavbar() {
       </Link>
 
       <div style={{ display: "flex", gap: "20px", alignItems: "center" }}>
-        {isLoggedIn || localStorage.getItem('token') ? (
+        {isLoggedIn ? (
           <>
             <Link href="/dashboard" style={{ textDecoration: "none", color: "#007bff" }}>
               Dashboard
@@ -66,9 +33,12 @@ export default function TaskNavbar() {
             <Link href="/tasks" style={{ textDecoration: "none", color: "#007bff" }}>
               Tasks
             </Link>
-            <span style={{ color: "#666" }}>👤 {username}</span>
+            <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+              <img src={hasUserImage && userId ? `/user-${userId}.jpg` : "/user-img.jpg"} alt="User" style={{ width: "40px", height: "40px", borderRadius: "50%" }} onError={(e) => { e.currentTarget.src = "/user-img.jpg" }} />
+              <span style={{ color: "#666" }}>{username}</span>
+            </div>
             <button
-              onClick={handleLogout}
+              onClick={logout}
               style={{
                 padding: "8px 16px",
                 backgroundColor: "#dc3545",

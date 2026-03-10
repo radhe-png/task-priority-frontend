@@ -1,5 +1,6 @@
 import "./globals.css"
 import TaskNavbar from "@/components/navbar/task-navbar"
+import { AuthProvider } from "@/components/auth-context"
 
 export default function RootLayout({
   children,
@@ -10,8 +11,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <TaskNavbar />
-        {children}
+        <AuthProvider>
+          <TaskNavbar />
+          {children}
+        </AuthProvider>
       </body>
     </html>
   )
