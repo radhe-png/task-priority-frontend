@@ -41,7 +41,7 @@ export default function DashboardPage() {
     <div className="container mx-auto px-4 py-8">
       <div className="flex items-center space-x-4 mb-6">
         {isLoggedIn && (
-          <img src={hasUserImage && userId ? `/user-${userId}.jpg` : "/user-img.jpg"} alt="User Image" className="w-16 h-16 rounded-full" onError={(e) => { e.currentTarget.src = "/user-img.jpg" }} />
+          <img src={hasUserImage && userId ? `/user-${userId}.jpg` : "https://static.vecteezy.com/system/resources/previews/046/010/545/non_2x/user-icon-simple-design-free-vector.jpg"} alt="User Image" className="w-16 h-16 rounded-full" onError={(e) => { e.currentTarget.src = "https://static.vecteezy.com/system/resources/previews/046/010/545/non_2x/user-icon-simple-design-free-vector.jpg" }} />
         )}
         <h1 className="text-3xl font-bold">Dashboard</h1>
       </div>

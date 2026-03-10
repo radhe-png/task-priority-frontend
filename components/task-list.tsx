@@ -70,7 +70,7 @@ export default function TaskList({ tasks, onUpdate }: TaskListProps) {
       )}
 
       {tasks.length === 0 ? (
-        <p className="text-gray-500"><Loading /></p>
+        <div className="text-gray-500"><Loading /></div>
       ) : (
         <div className="space-y-2">
           {tasks.map(task => (

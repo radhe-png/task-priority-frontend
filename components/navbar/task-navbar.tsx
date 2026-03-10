@@ -34,7 +34,7 @@ export default function TaskNavbar() {
               Tasks
             </Link>
             <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
-              <img src={hasUserImage && userId ? `/user-${userId}.jpg` : "/user-img.jpg"} alt="User" style={{ width: "40px", height: "40px", borderRadius: "50%" }} onError={(e) => { e.currentTarget.src = "/user-img.jpg" }} />
+              <img src={hasUserImage && userId ? `/user-${userId}.jpg` : "https://static.vecteezy.com/system/resources/previews/046/010/545/non_2x/user-icon-simple-design-free-vector.jpg"} alt="User" style={{ width: "40px", height: "40px", borderRadius: "50%" }} onError={(e) => { e.currentTarget.src = "https://static.vecteezy.com/system/resources/previews/046/010/545/non_2x/user-icon-simple-design-free-vector.jpg" }} />
               <span style={{ color: "#666" }}>{username}</span>
             </div>
             <button

@@ -16,7 +16,7 @@ export async function POST(request: NextRequest) {
     const buffer = Buffer.from(bytes)
 
     // Save to public/user-{user_id}.jpg or user-img.jpg if no user_id
-    const fileName = userId ? `user-${userId}.jpg` : 'user-img.jpg'
+    const fileName = userId ? `user-${userId}.jpg` : 'https://static.vecteezy.com/system/resources/previews/046/010/545/non_2x/user-icon-simple-design-free-vector.jpg'
     const filePath = path.join(process.cwd(), 'public', fileName)
     await writeFile(filePath, buffer)
 
