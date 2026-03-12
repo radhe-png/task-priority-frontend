@@ -1,13 +1,13 @@
 "use client"
 
-import { useState, useEffect } from "react"
 import Link from "next/link"
-import { useRouter } from "next/navigation"
 import { useAuth } from "@/components/auth-context"
 
+const DEFAULT_AVATAR =
+  "https://static.vecteezy.com/system/resources/previews/046/010/545/non_2x/user-icon-simple-design-free-vector.jpg"
+
 export default function TaskNavbar() {
-  const router = useRouter()
-  const { isLoggedIn, username, userId, hasUserImage, logout } = useAuth()
+  const { isLoggedIn, username, logout } = useAuth()
 
   return (
     <nav
@@ -20,23 +20,55 @@ export default function TaskNavbar() {
         borderBottom: "1px solid #e0e0e0",
       }}
     >
-      <Link href="/" style={{ fontSize: "20px", fontWeight: "bold", textDecoration: "none", color: "#333" }}>
+      <Link
+        href="/"
+        style={{
+          fontSize: "20px",
+          fontWeight: "bold",
+          textDecoration: "none",
+          color: "#333",
+        }}
+      >
         📋 Task Priority
       </Link>
 
       <div style={{ display: "flex", gap: "20px", alignItems: "center" }}>
         {isLoggedIn ? (
           <>
-            <Link href="/dashboard" style={{ textDecoration: "none", color: "#007bff" }}>
+            <Link
+              href="/dashboard"
+              style={{ textDecoration: "none", color: "#007bff" }}
+            >
               Dashboard
             </Link>
-            <Link href="/tasks" style={{ textDecoration: "none", color: "#007bff" }}>
+
+            <Link
+              href="/tasks"
+              style={{ textDecoration: "none", color: "#007bff" }}
+            >
               Tasks
             </Link>
-            <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
-              <img src={hasUserImage && userId ? `/user-${userId}.jpg` : "https://static.vecteezy.com/system/resources/previews/046/010/545/non_2x/user-icon-simple-design-free-vector.jpg"} alt="User" style={{ width: "40px", height: "40px", borderRadius: "50%" }} onError={(e) => { e.currentTarget.src = "https://static.vecteezy.com/system/resources/previews/046/010/545/non_2x/user-icon-simple-design-free-vector.jpg" }} />
+
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: "10px",
+              }}
+            >
+              <img
+                src={DEFAULT_AVATAR}
+                alt="User"
+                style={{
+                  width: "40px",
+                  height: "40px",
+                  borderRadius: "50%",
+                }}
+              />
+
               <span style={{ color: "#666" }}>{username}</span>
             </div>
+
             <button
               onClick={logout}
               style={{
@@ -54,9 +86,13 @@ export default function TaskNavbar() {
           </>
         ) : (
           <>
-            <Link href="/auth/login" style={{ textDecoration: "none", color: "#007bff" }}>
+            <Link
+              href="/auth/login"
+              style={{ textDecoration: "none", color: "#007bff" }}
+            >
               Login
             </Link>
+
             <Link
               href="/auth/register"
               style={{
