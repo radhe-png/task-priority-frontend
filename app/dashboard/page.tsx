@@ -7,6 +7,9 @@ import { Task } from "@/types/task"
 import { useAuth } from "@/components/auth-context"
 import Loading from "../tasks/loading"
 
+const DEFAULT_AVATAR =
+  "https://static.vecteezy.com/system/resources/previews/046/010/545/non_2x/user-icon-simple-design-free-vector.jpg"
+
 function TasksSection() {
   const [tasks, setTasks] = useState<Task[]>([])
   const [loading, setLoading] = useState(true)
@@ -35,18 +38,23 @@ function TasksSection() {
 }
 
 export default function DashboardPage() {
-  const { isLoggedIn, userId, hasUserImage } = useAuth()
+  const { isLoggedIn } = useAuth()
 
   return (
     <div className="container mx-auto px-4 py-8">
       <div className="flex items-center space-x-4 mb-6">
         {isLoggedIn && (
-          <img src={hasUserImage && userId ? `/user-${userId}.jpg` : "https://static.vecteezy.com/system/resources/previews/046/010/545/non_2x/user-icon-simple-design-free-vector.jpg"} alt="User Image" className="w-16 h-16 rounded-full" onError={(e) => { e.currentTarget.src = "https://static.vecteezy.com/system/resources/previews/046/010/545/non_2x/user-icon-simple-design-free-vector.jpg" }} />
+          <img
+            src={DEFAULT_AVATAR}
+            alt="User Image"
+            className="w-16 h-16 rounded-full"
+          />
         )}
+
         <h1 className="text-3xl font-bold">Dashboard</h1>
       </div>
 
-      { isLoggedIn && <TasksSection />}
+      {isLoggedIn && <TasksSection />}
     </div>
   )
 }

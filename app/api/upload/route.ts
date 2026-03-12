@@ -5,24 +5,24 @@ import path from 'path'
 export async function POST(request: NextRequest) {
   try {
     const data = await request.formData()
-    const file: File | null = data.get('file') as unknown as File
-    const userId: string | null = data.get('user_id') as string
+    const userId = data.get("user_id") as string | null
 
-    if (!file) {
-      return NextResponse.json({ success: false, message: 'No file uploaded' })
-    }
+    // Use a default public image
+    const imageUrl =
+      "https://res.cloudinary.com/dldz7llz0/image/upload/v1773292534/samples/sheep.jpg"
 
-    const bytes = await file.arrayBuffer()
-    const buffer = Buffer.from(bytes)
-
-    // Save to public/user-{user_id}.jpg or user-img.jpg if no user_id
-    const fileName = userId ? `user-${userId}.jpg` : 'https://static.vecteezy.com/system/resources/previews/046/010/545/non_2x/user-icon-simple-design-free-vector.jpg'
-    const filePath = path.join(process.cwd(), 'public', fileName)
-    await writeFile(filePath, buffer)
-
-    return NextResponse.json({ success: true, message: 'File uploaded successfully', path: `/${fileName}` })
+    return NextResponse.json({
+      success: true,
+      message: "Using public image",
+      user_id: userId,
+      image: imageUrl,
+    })
   } catch (error) {
-    console.error('Upload error:', error)
-    return NextResponse.json({ success: false, message: 'Upload failed' })
+    console.error("Upload error:", error)
+
+    return NextResponse.json({
+      success: false,
+      message: "Upload failed",
+    })
   }
 }
